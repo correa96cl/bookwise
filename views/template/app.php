@@ -27,7 +27,10 @@
     </header>
 
     <main class="mx-auto max-w-screen-lg space-y-6">
-       VINICIO PORRRRAAAAA EM PHP
+
+        <?php require  "views/{$view}.view.php"; ?>
+
+
     </main>
 </body>
 

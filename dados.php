@@ -1,5 +1,20 @@
 <?php
 
+
+$db = new PDO('sqlite:bookwise.db');
+dd($db);
+
+if (!$db) {
+    die('Error: Could not connect to the database.');
+} else {
+    echo 'Database connected successfully!';
+}
+
+//$query = $db->prepare('SELECT * FROM livros');
+//$query->execute();
+
+//$livros = $query->fetchAll();
+
 $livros = [
     [
         "id" => 1,

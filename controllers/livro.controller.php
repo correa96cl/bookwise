@@ -1,10 +1,11 @@
 <?php
-require 'dados.php';
 
-$id = $_REQUEST["id"];
 
-$filtrado = array_filter($livros, fn($l) => $l["id"] == $id);
+$livro = $database->query("
+    select * from livros
+    where id = :id
+", Livro::class, ['id' => $_REQUEST['id']])->fetch();
 
-$livro = array_pop($filtrado);
+
 
 view('livro', compact('livro'));

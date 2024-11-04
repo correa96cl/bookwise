@@ -2,28 +2,40 @@
 
 
 
-class DB {
-    public function livros(){
-        $db = new PDO('mysql:host=localhost:3306;dbname=bookwise', 'root', 'admin123');
+class DB
+{
 
-        $query = $db->query('SELECT * FROM livros');
+    private $db;
 
-        $items = $query->fetchAll();
 
-        $retorno = [];
+    public function __construct($config)
+    {
 
-        foreach ($items as $item) {
-            $livro = new Livro;
-            $livro->id = $item['id'];
-            $livro->titulo = $item['titulo'];
-            $livro->author = $item['author'];
-            $livro->descricao = $item['descricao'];
-            $livro->ano_de_lancamento = $item['ano_de_lancamento'];
-            $livro->usuario_id = $item['usuario_id'];
 
-            $retorno[] = $livro;
+
+        $dsn = $config['driver'] . ':host=' . $config['host'] . ':' . $config['port'] . ';dbname=' . $config['database'];
+
+        try {
+            $this->db = new PDO($dsn, $config['username'], $config['password']);
+            $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // Set error mode to exceptions
+        } catch (PDOException $e) {
+            echo "Connection failed: " . $e->getMessage();
+        }
+    }
+
+    public function query($query, $class = null, $params = [])
+    {
+
+        $prepare = $this->db->prepare($query);
+
+        if ($class) {
+            $prepare->setFetchMode(PDO::FETCH_CLASS, $class);
         }
 
-        return $retorno;
+        $prepare->execute($params);
+
+        return $prepare;
     }
 }
+
+$database = new DB(config('database'));

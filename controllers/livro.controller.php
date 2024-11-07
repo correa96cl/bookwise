@@ -1,11 +1,13 @@
 <?php
 
 
-$livro = $database->query("
-    select * from livros
-    where id = :id
-", Livro::class, ['id' => $_REQUEST['id']])->fetch();
+$livro = Livro::get($_GET['id']);
 
 
+$avaliacoes = $database->query("
+    select * from avaliacoes
+    where livro_id = :id
+", Availacao::class, ['id' => $_GET['id']])->fetchAll();
 
-view('livro', compact('livro'));
+
+view('livro', compact('livro', 'avaliacoes'));

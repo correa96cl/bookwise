@@ -1,25 +1,26 @@
 <?= $livro->titulo ?>
-<div class="p-2 rounded border-stone-800 border-2 bg-stone-900">
-    <div class="flex">
-        <div class="w-1/3">Imagem</div>
-        <div class="space-y-1">
-            <a href="/livro.php?id=<?= $livro->id ?>" class="font-semibold hover:underline"><?= $livro->titulo ?></a>
-            <div class="text-xs italic"><?= $livro->author ?></div>
-            <div class="text-xs italic">⭐️⭐️⭐️(3 Avaliaçoes)</div>
-        </div>
 
-    </div>
+<?php require 'partials/_livro.php'; ?>
 
-    <div class="text-sm mt-2">
-        <?= $livro->descricao ?>
-    </div>
-</div>
 
 <h2>Avaliaçoes</h2>
 
 <div class="grid grid-cols-4 gap-4">
-    <div class="col-span-3">lista
+    <div class="col-span-3 gap-4 grid">
 
+        <?php foreach ($avaliacoes as $avaliacao): ?>
+
+            <div class="border border-stone-700 rounded p-2">
+                <?= $avaliacao->avaliacao ?>
+
+                <?php
+                $nota = str_repeat("⭐️", $avaliacao->nota);
+                ?>
+
+                <?= $nota ?>
+            </div>
+
+        <?php endforeach; ?>
     </div>
     <div>
 
@@ -42,7 +43,6 @@
                         </div>
 
                     <?php endif; ?>
-
 
                     <div class="flex flex-col">
                         <input name="livro_id" type="hidden" value="<?= $livro->id ?>">
@@ -67,7 +67,7 @@
                             name="nota"
                             id="nota"
                             class="border-stone-800 border-2 rounded-md bg-stone-900 text-sm focus:outline-none px-2 py-1">
-                             <option value="">Selecione</option>           
+                            <option value="">Selecione</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>

@@ -15,8 +15,9 @@
             <div class="font-bold text-xl tracking-wide">Book wise</div>
             <ul class="flex space-x-4">
                 <li><a href="/" class="text-lime-500">Explorar</a></li>
+                <?php if (auth()): ?>
                 <li><a href="/meus-livros" class="hover:underline">Meu livros</a></li>
-
+                <?php endif; ?>
 
 
             </ul>
@@ -40,7 +41,7 @@
 
         <?php endif; ?>
 
-        <?php require  "views/{$view}.view.php"; ?>
+        <?php require  "../views/{$view}.view.php"; ?>
 
 
     </main>
